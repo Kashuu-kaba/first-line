@@ -13,31 +13,37 @@ class StoriesController < ApplicationController
   def create
     @line = Line.find(params[:line_id])
     @new_story = @line.stories.new(story_params)
-    #story_paramがstory_idを持っているか田舎で条件分岐しようとしていたが保留→story_params[:story_id]
     #story._new.html.erbでhiddenを使いstory_idを送っているはず
     if @new_story.save
-       redirect_to request.referer
+      redirect_to request.referer
     else
-      if @new_story.story_id == nil
-          @stories = @line.stories
-          @first_stories = @stories.where(story_id: nil)
-          @comment = Comment.new()
-          render  template: 'lines/show'
-        else
-          @story = Story.find_by(line_id: @line.id, id: params[:id])
+      @story = Story.find_by(line_id: @line.id, id: story_params[:story_id])
+      @from = Story.all
+      if @new_story.story_id #2つ目以降のstory
+        #if Story.where(story_id: @story.id)
           @stories = Story.where(story_id: @story.id)
+        #else
+        #  @stories = @line.stories.where.not(id: nil)
+        #end
         render :show
-        end
+      else #１つ目のstory
+        @stories = @line.stories
+        @first_stories = @stories.where(story_id: nil)
+        @comment = Comment.new()
+        render  template: 'lines/show'
+      end
     end
   end
 
-  def destroy
-    story = Story.find_by(id: params[:id], line_id: params[line_id])
-    if story.user.id == current_user.id
-      story.destroy
-      redirect_to request.referer
-    end
+  def edit
   end
+
+  #def destroy　これをするならdependent: :destroyを考えないといけない
+  #  line = Line.find(params[:line_id])
+  #  story = Story.find_by(line_id: params[line.id], id: params[:id])
+  #  story.destroy
+  #  redirect_to request.referer
+  #end
 
   protected
   def story_params

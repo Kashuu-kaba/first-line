@@ -1,0 +1,99 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 my-3">
+      <h1>Line show</h1>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>書き出し</th>
+            <th>本のタイトル</th>
+            <th>jenru</th>
+            <th>user</th>
+            <th>いいね数</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><%= @line.content %></td>
+            <td><%= @line.book_title %></td>
+            <td><%= @line.jenru %></td>
+            <td><%= link_to @line.user.name, user_path(@line.user.id) %></td>
+        <!-- %= @line.type.category %-->
+            <td>
+              <% if @line.favorited_by?(current_user) %>
+                <%= link_to line_favorites_path(@line), method: :delete do %>
+                  <i class="fas fa-heart"></i><%= @line.favorites.count%>
+                <% end %>
+              <% else %>
+                <%= link_to line_favorites_path(@line), method: :post do %>
+                  <i class="far fa-heart"></i><%= @line.favorites.count%>
+                <% end %>
+              <% end %>
+            </td>
+
+            <td>
+              <% if @line.user_id == current_user.id %>
+                <%= link_to "Edit", edit_line_path(@line) %>
+                <%= link_to "destroy", line_path(@line), method: :delete, data: {confirm: "削除しますか？"} %>
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <%= render "layouts/error", obj:@new_story %>
+    <%= render "lines/first_story", line:@line, class:"my-4" %>
+
+      <div class="col-md-10 mx-auto">
+        <h5 class="mt-4">story(この書き出しの続き)一覧</h5>
+        <table class="table">
+          <tbody>
+            <% @first_stories.each do |story| %>
+              <tr>
+                <td>
+                  <p><%= link_to story.story_comment, line_story_path(@line.id, story.id) %></p>
+                </td>
+                <td>
+                  <p><%= story.user.name %></p>
+                </td>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-4 offset-md-1 my-5">
+    <h5>Lineに対するコメント一覧</h5>
+      <table class="table">
+        <tbody>
+          <% @line.comments.each do |comment| %>
+            <tr>
+              <td>
+                <p><%= comment.line_comment %></p>
+              </td>
+              <td>
+                <p><%= link_to comment.user.name, user_path(comment.user) %></p>
+              </td>
+              <td>
+                <% if comment.user.id == current_user.id %>
+                  <%= link_to "Destroy", line_comment_path(@line.id, comment.id), method: :delete, data: {confirm: "削除しますか？"}, class:"btn btn-danger btn-sm" %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <%=form_with model:[@line, @comment], url: line_comments_path(@line.id), method: :post,local:true do |f| %>
+        <div class="field">
+          <%= f.label :line_comment %>
+          <%= f.text_field :line_comment, autofocus:true, autocomplete: "line_comment"%>
+        </div>
+
+        <div class="action">
+          <%= f.submit "create comment", class:"btn btn-success"%>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

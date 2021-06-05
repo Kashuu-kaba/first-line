@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row my-3">
+    <div class="col-12">
+      <h1><%= @user.name %>さんの詳細ページ</h1>
+      <p><%= @user.introduction %></p>
+      <p>
+        <%= link_to edit_user_path(@user.id) do %>
+          <i class="fas fa-user-cog"></i> Edit
+        <% end %>
+      </p>
+    </div>
+
+      <div class="col-md-5">
+        <h3><%=@user.name%>さんのLine一覧</h3>
+        <table>
+          <% @lines.each do |line| %>
+          <tbody>
+            <tr>
+              <td><%= link_to line.content, line_path(line.id) %></td>
+              <td><%= line.book_title %></td>
+            </tr>
+          </tbody>
+          <% end %>
+        </table>
+      </div>
+      <div class="col-md-5 offset-md-2">
+        <h3><%=@user.name%>さんのStory一覧</h3>
+        <table>
+          <% @user.stories.all.each do |story| %>
+          <tbody>
+            <tr>
+              <td><%= link_to story.story_comment, line_story_path(story.line.id, story.id)%></td>
+            </tr>
+          </tbody>
+          <% end %>
+          </table>
+    </div>
+  </div>
+</div>

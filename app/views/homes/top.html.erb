@@ -1,2 +1,21 @@
-<h1>Homes#top</h1>
-<p>Find me in app/views/homes/top.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 my-3">
+     <h3>このサイトは小説をリレーすることができます！</h3>
+     <p>[できること]</p>
+     <ul>
+        <li>２００字ごとにストーリーを繋げていくことができます</li>
+        <li>Lineが物語の１行目になります</li>
+        <li>１つのLineとStoryに対して物語を何通りも作ることができるため<strong>１つのスタートから無限のゴールが生まれます</strong></li>
+     </ul>
+     <img src= "/assets/top_example.png">
+     <!--"../assets/images/top_example"></=>-->
+    </div>
+    <div class="col-md-3 offset-md-1">
+    <% unless user_signed_in? %>
+      <p><%= link_to "Sign up", new_user_registration_path, class: "btn btn-success btn-sm" %></p>
+      <p><%= link_to "Log in", new_user_session_path, class:"btn btn-info btn-sm" %></p>
+    <% end %>
+    </div>
+  </div>
+</div>

@@ -10,10 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_22_075940) do
+ActiveRecord::Schema.define(version: 2021_06_03_102358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.integer "line_id"
+    t.text "line_comment"
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "line_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "lines", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.text "content"
+    t.text "book_title"
+    t.integer "user_id"
+    t.integer "jenru", limit: 2, default: 0, null: false
+  end
+
+  create_table "stories", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "line_id"
+    t.text "story_comment"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "story_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
   root to: 'homes#top'
   devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  resources :lines, except: [:new] do
+    resource :favorites, only: [:create, :destroy]
+
+    resources :comments, only: [:create, :destroy]
+
+    resources :stories, only: [:show, :create, :destroy]
+  end
+
+  resource :types, only: [:create, :destroy]
+
+  resources :users, only: [:show, :edit, :update]
 end

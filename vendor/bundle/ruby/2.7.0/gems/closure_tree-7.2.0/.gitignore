@@ -1,0 +1,16 @@
+.bundle/
+.history/
+.idea/
+pkg/
+rdoc/
+doc/
+*.sqlite3.db
+*.log
+tmp/
+.DS_Store
+.yardoc/
+.rvmrc
+*.lock
+tmp/
+.ruby-*
+*.iml

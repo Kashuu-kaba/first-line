@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 my-3">
+    <h5>このstoryの前の投稿</h5>
+    <% if @story.story_id %>
+      <%= @story.story.story_comment　%>
+    <% else %>
+      <%= link_to @story.line.content, line_path(@story.line_id) %>
+    <%end %>
+
+    <h1>story show</h1>
+
+    <%= @story.story_comment %>
+    <%= render "layouts/error", obj:@new_story %>
+
+    <%=form_with model: @new_story, url:line_stories_path(@story.line.id), method: :post,local:true do |f| %>
+      <%= f.hidden_field :story_id, value: @story.id %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+
+      <div class="field">
+        <%= f.label :story_comment %>
+        <%= f.text_area :story_comment, autofocus:true, autocomplete: "story_comment"%>
+      </div>
+
+      <div class="action">
+        <%= f.submit "create story", class:"btn btn-success"%>
+      </div>
+   <% end %>
+
+    <div class="col-md-10 mx-auto">
+    <h3>この話の続きのstory一覧</h3>
+    <table class="table">
+      <tbody>
+        <% @stories.each do |story| %>
+        <tr>
+          <td>
+          <%= link_to story.story_comment, line_story_path(@line.id, story.id) %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+<div class="colmd"

@@ -1,13 +1,18 @@
 class CommentsController < ApplicationController
 
   def create
-    line = Line.find(params[:line_id])
-    comment = current_user.comments.new(comment_params)
-    comment.line_id = line.id
-    if comment.save
+    @line = Line.find(params[:line_id])
+    @comment = current_user.comments.new(comment_params)
+    @comment.line_id = @line.id
+    if @comment.save
       redirect_to request.referer
     else
-      render line_path(line.id)
+      #@comments = Comment.all
+      @new_story = Story.new
+      @stories = @line.stories
+      @first_stories = @stories.where(story_id: nil)
+      render template: "lines/show"
+      #render line_path(@line.id)うまくいかなかった
     end
   end
   

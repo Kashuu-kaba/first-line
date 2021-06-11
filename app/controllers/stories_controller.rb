@@ -18,7 +18,6 @@ class StoriesController < ApplicationController
       redirect_to request.referer
     else
       @story = Story.find_by(line_id: @line.id, id: story_params[:story_id])
-      @from = Story.all
       if @new_story.story_id #2つ目以降のstory
         #if Story.where(story_id: @story.id)
           @stories = Story.where(story_id: @story.id)
@@ -38,12 +37,19 @@ class StoriesController < ApplicationController
   def edit
   end
 
-  #def destroy　これをするならdependent: :destroyを考えないといけない
-  #  line = Line.find(params[:line_id])
-  #  story = Story.find_by(line_id: params[line.id], id: params[:id])
-  #  story.destroy
-  #  redirect_to request.referer
-  #end
+  def destroy　#これをするならdependent: :destroyを考えないといけない
+   @line = Line.find(params[:line_id])
+   @story = Story.find_by(line_id: params[@line.id], id: params[:id])
+   if @story.destroy
+    redirect_to root_path
+   else
+    @new_story = Story.new
+    @line = Line.find(params[:line_id])
+    @story = Story.find_by(line_id: @line.id, id: params[:id])
+    @stories = Story.where(story_id: @story.id)
+    render :show
+  end
+  end
 
   protected
   def story_params

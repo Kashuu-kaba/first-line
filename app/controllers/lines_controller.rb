@@ -19,7 +19,7 @@ before_action :set_params, only: [:show, :edit, :update, :destroy]
 
   def show
     @comment = Comment.new()
-    @comments = Comment.all
+    #@comments = Comment.all
     @new_story = Story.new
     @stories = @line.stories
     @first_stories = @stories.where(story_id: nil)

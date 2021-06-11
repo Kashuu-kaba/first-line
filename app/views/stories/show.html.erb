@@ -3,11 +3,14 @@
     <div class="col-md-7 my-3">
     <!--今までの投稿がうまくいかなかったらこっちを使う-->
     <h5>このstoryの前の投稿</h5>
-    <% if @story.story_id.present? %>
-      <%= link_to @story.parent_story(@story.story_id).story_comment, line_story_path(@line.id, @story.parent_story(@story.story_id).id) %>
-    <% else %>
+    <%# if @story.story_id.present? %>
       <%= link_to @story.line.content, line_path(@story.line_id) %>
-    <% end %>
+      <% @story.all_parents(@story.story_id).each do |source| %>
+        <%= source %>
+      <% end %>
+    <%# else %>
+        <%#= link_to @story.parent_story(@story.story_id).story_comment, line_story_path(@line.id, @story.parent_story(@story.story_id).id) %>
+    <%# end %>
 
     <h1>story show</h1>
 
@@ -39,7 +42,7 @@
 
       <div class="field">
         <%= f.label :story_comment %>
-        <%= f.text_area :story_comment, autofocus:true, autocomplete: "story_comment"%>
+        <%= f.text_area :story_comment, autofocus:true, autocomplete: "story_comment", class:"form-control"%>
       </div>
 
       <div class="action">
@@ -61,7 +64,8 @@
         <% end %>
       </tbody>
     </table>
-    </div>
+  </div>
+  <div class="col-md-4 offset-md-1 my-5">
+  </div>
   </div>
 </div>
-<div class="colmd"

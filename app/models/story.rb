@@ -12,26 +12,18 @@ class Story < ApplicationRecord
     pp parent = parent_story(resource_id)
 
     if parent.story_id.nil?
-      parents << parent.story_comment
+      #pp "True"
+      parents << parent
       #parents << parent.line.content
     else
-      parents << parent.story_comment
+      #pp "False"
+      parents << parent
       all_parents(parents, parent.story_id)
     end
-
-    # parents = []
-    # pp parent = parent_story(resource_id)
-
-    # if parent.story_id.nil?
-    #   pp "Ture"
-    #   parents << parent.line.content
-    #   parents << parent.story_comment
-    #   #all_parents(parent.story_id)
-    # else
-    #   pp "False"
-    #   pp parents << parent.story_comment
-    #   all_parents(parent.story_id)
-    # end
-
   end
+
+  def child_story(resource_id)
+    Story.find(story_id: resource_id)
+  end
+
 end

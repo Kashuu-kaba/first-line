@@ -15,7 +15,7 @@ class StoriesController < ApplicationController
     @new_story = @line.stories.new(story_params)
     #story._new.html.erbでhiddenを使いstory_idを送っているはず
     if @new_story.save
-      redirect_to request.referer
+      redirect_to request.referer, notice: "Story is created successfully!"
     else
       @story = Story.find_by(line_id: @line.id, id: story_params[:story_id])
       if @new_story.story_id #2つ目以降のstory
@@ -35,20 +35,21 @@ class StoriesController < ApplicationController
   end
 
   def edit
-  end
-
-  def destroy　#これをするならdependent: :destroyを考えないといけない
-   @line = Line.find(params[:line_id])
-   @story = Story.find_by(line_id: params[@line.id], id: params[:id])
-   if @story.destroy
-    redirect_to root_path
-   else
-    @new_story = Story.new
     @line = Line.find(params[:line_id])
     @story = Story.find_by(line_id: @line.id, id: params[:id])
-    @stories = Story.where(story_id: @story.id)
-    render :show
   end
+
+  def update
+    @line = Line.find(params[:line_id])
+    @story = Story.find_by(line_id: @line.id, id: params[:id])
+    if @story.update(update_params)
+      redirect_to line_story_path(@line, @story), notice: "Story is updated successfully!"
+    else
+      render :edit
+    end
+  end
+
+  def destroy #これをするならdependent: :destroyを考えないといけない
   end
 
   protected
@@ -56,4 +57,10 @@ class StoriesController < ApplicationController
     params.require(:story).permit(:user_id, :story_id, :story_comment)
     #params.require(:story).permit(:story_comment, :line_id).merge(user_id: current_user.id)
   end
+
+  def update_params
+    params.require(:story).permit(:story_comment)
+  end
+
+
 end

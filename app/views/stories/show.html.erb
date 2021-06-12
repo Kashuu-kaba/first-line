@@ -2,13 +2,15 @@
   <div class="row">
     <div class="col-md-7 my-3">
     <!--今までの投稿がうまくいかなかったらこっちを使う-->
-    <h5>このstoryの前の投稿</h5>
+    <h5>これまでの話</h5>
+    <%= render "stories/until_story", story:@story%>
     <%# if @story.story_id.present? %>
-      <%= link_to @story.line.content, line_path(@story.line_id) %>
-      <% @story.all_parents(@story.story_id).each do |source| %>
-        <%= source %>
-      <% end %>
+      <%#= link_to @story.line.content, line_path(@story.line_id) %>
+      <%# @story.all_parents(@story.story_id).reverse.each do |source| %>
+        <%#= link_to source.story_comment, line_story_path(@line.id, source.id) %>
+      <%# end %>
     <%# else %>
+      <%#= link_to @story.line.content, line_path(@story.line_id) %>
         <%#= link_to @story.parent_story(@story.story_id).story_comment, line_story_path(@line.id, @story.parent_story(@story.story_id).id) %>
     <%# end %>
 
@@ -28,7 +30,7 @@
             <td><%= @story.user.name %></td>
             <td>
               <% if @story.user_id == current_user.id %>
-                <%= link_to "destroy", line_story_path(@line.id, @story.id), method: :delete, data: {confirm: "削除しますか？"} %>
+                <%= link_to "Edit", edit_line_story_path(@line.id, @story.id) %>
               <% end %>
             </td>
           </tr>

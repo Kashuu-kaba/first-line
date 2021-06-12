@@ -5,7 +5,7 @@ before_action :set_params, only: [:show, :edit, :update, :destroy]
     @line = Line.new(line_params)
     @line.user_id = current_user.id
     if @line.save
-      redirect_to lines_path
+      redirect_to lines_path, notice: "Line is created successfully!"
     else
       @lines = Line.all
       render :index
@@ -30,7 +30,7 @@ before_action :set_params, only: [:show, :edit, :update, :destroy]
 
   def update
     if @line.update(line_params)
-      redirect_to lines_path
+      redirect_to lines_path, notice: "Line is updated successfully!"
     else
       render :edit
     end

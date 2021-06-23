@@ -10,30 +10,27 @@
       </p>
     </div>
 
-      <div class="col-md-5">
-        <h3><%=@user.name%>さん作の書き出し文一覧</h3>
-        <table>
-          <% @lines.each do |line| %>
-          <tbody>
-            <tr>
-              <td><%= link_to line.content, line_path(line.id) %></td>
-              <td><%= line.book_title %></td>
-            </tr>
-          </tbody>
-          <% end %>
-        </table>
-      </div>
-      <div class="col-md-5 offset-md-2">
-        <h3><%=@user.name%>さん作のStory一覧</h3>
-        <table>
-          <% @user.stories.all.each do |story| %>
-          <tbody>
-            <tr>
-              <td><%= link_to story.story_comment, line_story_path(story.line.id, story.id)%></td>
-            </tr>
-          </tbody>
-          <% end %>
-          </table>
+    <div class="col-md-5">
+      <h3><%=@user.name%>さん作の書き出し文一覧</h3>
+        <% @lines.each do |line| %>
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text"><%= link_to line.content, line_path(line.id) %></p>
+              <p class="card-text"><%= line.book_title %></p>
+            </div>
+          </div>
+        <% end %>
+    </div>
+
+    <div class="col-md-5 offset-md-2">
+      <h3><%=@user.name%>さん作のStory一覧</h3>
+        <% @user.stories.all.each do |story| %>
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text"><%= link_to story.story_comment, line_story_path(story.line.id, story.id)%></p>
+            </div>
+          </div>
+        <% end %>
     </div>
   </div>
 </div>

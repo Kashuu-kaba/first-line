@@ -1,27 +1,17 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-7 my-3">
+    <div class="col-md-8 my-3">
       <h1>この書き出し文の詳細</h1>
 
-      <table class="table">
-        <thead>
-          <tr>
-            <th>書き出し</th>
-            <th>本のタイトル</th>
-            <th>jenru</th>
-            <th>user</th>
-            <th>いいね数</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td><%= @line.content %></td>
-            <td><%= @line.book_title %></td>
-            <td><%= @line.jenru %></td>
-            <td><%= link_to @line.user.name, user_path(@line.user.id) %></td>
-        <!-- %= @line.type.category %-->
-            <td>
+      <div class="card">
+          <div class="card-body">
+            <h5 class="card-text"><%= @line.content %></h5>
+            <div class="card-text ">
+              タイトル：<i><%= @line.book_title %></i>
+              ジャンル：<i><%= @line.jenru %></i>
+              ユーザー:<i><%= link_to @line.user.name, user_path(@line.user_id) %></i>
+            </div>
+            <a>
               <% if @line.favorited_by?(current_user) %>
                 <%= link_to line_favorites_path(@line), method: :delete do %>
                   <i class="fas fa-heart"></i><%= @line.favorites.count%>
@@ -31,38 +21,35 @@
                   <i class="far fa-heart"></i><%= @line.favorites.count%>
                 <% end %>
               <% end %>
-            </td>
-
-            <td>
+            </a>
+            <p class="card-text">
               <% if @line.user_id == current_user.id %>
                 <%= link_to "Edit", edit_line_path(@line) %>
                 <%= link_to "destroy", line_path(@line), method: :delete, data: {confirm: "削除しますか？"} %>
-              <% end %>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            <% end %>
+            </p>
+          </div>
+      </div>
+
     <%= render "layouts/error", obj:@new_story %>
     <%= render "lines/first_story", line:@line, class:"my-4" %>
 
-      <div class="col-md-10 mx-auto">
+      <div class="col-md-12 mx-auto">
         <h5 class="mt-4">story(この書き出しの続き)一覧</h5>
-        <table class="table">
-          <tbody>
-            <% @first_stories.each do |story| %>
-              <tr>
-                <td>
-                  <p><%= link_to story.story_comment, line_story_path(@line.id, story.id) %></p>
-                </td>
-                <td>
-                  <p><%= story.user.name %></p>
-                </td>
-            <% end %>
-          </tbody>
-        </table>
+            <div class="row">
+              <% @first_stories.each do |story| %>
+                <div class="card col-6">
+                  <div class="card-body">
+                    <p class="card-text"><%= link_to story.story_comment, line_story_path(@line.id, story.id) %></p>
+                    <p class="card-text"><%= story.user.name %></p>
+                  </div>
+                </div>
+              <% end %>
+            </div>
       </div>
     </div>
-    <div class="col-md-4 offset-md-1 my-5">
+
+    <div class="col-md-3 offset-md-1 my-5">
     <h5>この書き出し文に対するコメント一覧</h5>
       <table class="table">
         <tbody>

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
     resources :stories, only: [:show, :create, :edit, :update]
       #resources :comments, only: [:create, :destroy]
-    
+
   end
   resources :users, only: [:show, :edit, :update]
 end

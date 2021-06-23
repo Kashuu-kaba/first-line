@@ -1,43 +1,29 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8">
-
       <h1 class="my-5">書き出し文一覧</h1>
-
-      <table class="table">
-        <thead>
-          <tr>
-            <th>書き出し</th>
-            <th>本のタイトル</th>
-            <th>User</th>
-            <th>いいね数</th>
-            <th>story</th>
-          </tr>
-        </thead>
-
       <% @lines.each do |line| %>
-        <tbody>
-          <tr>
-            <td><%= link_to line.content, line_path(line.id) %></td>
-            <td><%= line.book_title %></td>
-            <td><%= link_to line.user.name, user_path(line.user_id) %></td>
-            <td>
-            <% if line.favorited_by?(current_user) %>
-              <%= link_to line_favorites_path(line), method: :delete do %>
-                <i class="fas fa-heart"></i><%= line.favorites.count%>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-text"><%= link_to line.content, line_path(line.id) %></h5>
+            <p class="card-text"><%= line.book_title %></p>
+            <a class="card-text"><%= link_to line.user.name, user_path(line.user_id) %></a>
+            <a>
+              <% if line.favorited_by?(current_user) %>
+                <%= link_to line_favorites_path(line), method: :delete do %>
+                  <i class="fas fa-heart"></i><%= line.favorites.count%>
+                <% end %>
+              <% else %>
+                <%= link_to line_favorites_path(line), method: :post do %>
+                  <i class="far fa-heart"></i><%= line.favorites.count%>
+                <% end %>
               <% end %>
-            <% else %>
-              <%= link_to line_favorites_path(line), method: :post do %>
-                <i class="far fa-heart"></i><%= line.favorites.count%>
-              <% end %>
-            <% end %>
-            </td>
-            <td><%= line.stories.count%></td>
-          </tr>
-        </tbody>
+            </a>
+        　 </div>
+        </div>
       <% end %>
-      </table>
     </div>
+
     <div class="col-md-3 offset-md-1 my-2">
       <h3>新しい書き出し文を作る</h3>
       <%= render "layouts/error", obj:@line %>

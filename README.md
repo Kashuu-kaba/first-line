@@ -24,5 +24,5 @@ Things you may want to cover:
 * ...
 
 
-<img src="./app//images/er.png">
-<img src="./app/images/UI.png">
+<img src="./app/assets/images/er.png">
+<img src="./app/assets/images/UI.png">

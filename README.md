@@ -22,3 +22,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+
+<img src="./app//images/er.png">
+<img src="./app/images/UI.png">

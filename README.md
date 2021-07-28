@@ -5,7 +5,7 @@
 
 ○完成URL
 以下のURLがherokuからデプロイしたものです。ぜひお試しください！
-https://relay-novel.herokuapp.com
+<a href="https://relay-novel.herokuapp.com", " target="_blank">完成URL</a>
 
 ○制作軌間
 2021年5月12日〜5月30日の約1ヶ月です。初めてのアプリ制作だったので時間がかかりました。
